@@ -1,0 +1,26 @@
+package: github.com/syukur91/ischool
+import:
+- package: github.com/Gurpartap/logrus-stack
+- package: github.com/Jeffail/gabs
+- package: github.com/abbot/go-http-auth
+- package: github.com/franela/goreq
+- package: github.com/hashicorp/consul
+  subpackages:
+  - api
+- package: github.com/jinzhu/gorm
+- package: github.com/joho/godotenv
+- package: github.com/labstack/echo
+  subpackages:
+  - middleware
+- package: github.com/labstack/gommon
+  subpackages:
+  - color
+- package: github.com/parnurzeal/gorequest
+- package: github.com/sirupsen/logrus
+- package: github.com/valyala/fasttemplate
+- package: github.com/phayes/freeport
+- package: github.com/dgrijalva/jwt-go
+testImport:
+- package: github.com/stretchr/testify
+  subpackages:
+  - assert
