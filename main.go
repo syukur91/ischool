@@ -4,6 +4,8 @@ import (
 	"os"
 
 	"github.com/Gurpartap/logrus-stack"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -50,7 +52,16 @@ func main() {
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
 
-	setupHandlers(e, nfLog)
+	// Postgres
+	db, err := gorm.Open(os.Getenv("DATABASE_DIALECT"), os.Getenv("DATABASE_URL"))
+	if err != nil {
+		log.Fatal("Failed to connect to Database: " + err.Error())
+	}
+	logMode := os.Getenv("DATABASE_LOGMODE")
+	db.LogMode(logMode == "true")
+	defer db.Close()
+
+	setupHandlers(e, db, nfLog)
 
 	servicePort := os.Getenv("PORT")
 	nfLog.Info("Container mgmt API Started at Port " + servicePort)

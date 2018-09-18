@@ -1,11 +1,13 @@
 package student
 
 import (
+	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 )
 
 type StudentCLI struct {
 	Log *log.Entry
+	DB  *gorm.DB
 }
 
 func NewStudentCLI(log *log.Entry) *StudentCLI {

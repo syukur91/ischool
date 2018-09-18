@@ -7,11 +7,12 @@ import (
 	"github.com/syukur91/ischool/student"
 	"github.com/syukur91/ischool/studentserver"
 
+	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 	log "github.com/sirupsen/logrus"
 )
 
-func setupHandlers(e *echo.Echo, log *log.Entry) {
+func setupHandlers(e *echo.Echo, db *gorm.DB, log *log.Entry) {
 
 	r := e.Group("/:tenant/api")
 
