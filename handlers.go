@@ -4,12 +4,17 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/syukur91/ischool/student"
+	"github.com/syukur91/ischool/domain"
+	postgreStorage "github.com/syukur91/ischool/storage/postgre"
 	"github.com/syukur91/ischool/studentserver"
 
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 	log "github.com/sirupsen/logrus"
+)
+
+var (
+	studentStorage domain.StudentStorage
 )
 
 func setupHandlers(e *echo.Echo, db *gorm.DB, log *log.Entry) {
@@ -20,11 +25,11 @@ func setupHandlers(e *echo.Echo, db *gorm.DB, log *log.Entry) {
 		return c.String(http.StatusOK, "Hello "+c.Param("tenant")+"! This is API version: "+os.Getenv("VERSION"))
 	})
 
-	studentClient := student.NewStudentCLI(log)
+	studentStorage := postgreStorage.NewStudentPostgreStorage(db, log)
 
 	studentserverHandler := &studentserver.Handler{
-		StudentClient: studentClient,
-		Log:           log,
+		StudentStorage: studentStorage,
+		Log:            log,
 	}
 
 	studentserverHandler.SetRoutes(r)
