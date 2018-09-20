@@ -38,3 +38,52 @@ func (s *StudentPotgreStorage) CreateStudent(d *domain.Student) (*domain.Student
 
 	return d, nil
 }
+
+func (s *StudentPotgreStorage) GetStudent(id string) (*domain.Student, error) {
+
+	t := domain.Student{}
+	d := domain.StudentData{}
+
+	if err := s.DB.Where("id=?", id).Find(&d).Error; err != nil {
+		return nil, errors.Errorf("APIKey with id: %s is not found", id)
+	}
+
+	if err := json.Unmarshal([]byte(d.Data), &t); err != nil {
+		return nil, errors.Errorf("APIKey with id: %s error unmarshall", id)
+	}
+
+	return &t, nil
+}
+
+func (s *StudentPotgreStorage) GetStudentByNIS(nis string) (*domain.Student, error) {
+
+	t := domain.Student{}
+	d := domain.StudentData{}
+
+	if err := s.DB.Where(`data@>'{"nis": "` + nis + `"}'`).Find(&d).Error; err != nil {
+		return nil, errors.Errorf("Student with nis: %s is not found", nis)
+	}
+
+	if err := json.Unmarshal([]byte(d.Data), &t); err != nil {
+		return nil, errors.Errorf("Student with nis: %s error unmarshall", nis)
+	}
+
+	return &t, nil
+}
+
+func (s *StudentPotgreStorage) UpdateStudent(nis string, d *domain.Student) (*domain.Student, error) {
+
+	b, err := json.Marshal(d)
+	if err != nil {
+		return nil, errors.Errorf("Error marshalling struct id %s", d.ID)
+	}
+
+	value := string(b)
+
+	update := s.DB.Model(&domain.StudentData{}).Where(`data@>'{"nis": "`+nis+`"}'`).Update("data", value)
+	if update.Error != nil {
+		return nil, errors.Errorf(update.Error.Error(), nis)
+	}
+
+	return d, nil
+}

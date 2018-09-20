@@ -2,13 +2,21 @@ package domain
 
 import (
 	"time"
+
+	"github.com/google/uuid"
 )
 
 // StudentData is
 type Student struct {
 	ID        string     `json:"id,omitempty"`
+	NIS       string     `json:"nis,omitempty"`
 	Name      string     `json:"name,omitempty"`
-	Age       string     `json:"age,omitempty"`
+	Age       int        `json:"age,omitempty"`
+	Class     string     `json:"class,omitempty"`
+	Sex       string     `json:"sex,omitempty"`
+	Grade     int        `json:"grade,omitempty"`
+	Address   string     `json:"address,omitempty"`
+	Status    string     `json:"status,omitempty"`
 	CreatedAt *time.Time `json:"created_at"`
 	CreatedBy string     `json:"created_by"`
 	UpdatedAt *time.Time `json:"updated_at"`
@@ -23,6 +31,8 @@ type StudentData struct {
 }
 
 func (c *Student) SetCreated(user string) {
+	id := uuid.Must(uuid.NewRandom())
+	c.ID = id.String()
 	now := time.Now()
 	c.CreatedAt = &now
 	c.CreatedBy = user

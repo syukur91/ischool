@@ -20,6 +20,12 @@
   revision = "751773369052141c013c6e827a71e8f35c07879c"
 
 [[projects]]
+  name = "github.com/google/uuid"
+  packages = ["."]
+  revision = "d460ce9f8df2e77fb1ba55ca87fafed96c607494"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/jinzhu/gorm"
   packages = [
     ".",
@@ -128,6 +134,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6d3cd28b6d562543da0d6794d8f1c4041c1fb8b1dc5830b74500bdaf03b8ab60"
+  inputs-digest = "7ae5902d5f5eb673188e591b1107270a2ac1b83f3841b4d1c33f5638d4278186"
   solver-name = "gps-cdcl"
   solver-version = 1
