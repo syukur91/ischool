@@ -14,7 +14,7 @@ type Student struct {
 	Age       int        `json:"age,omitempty"`
 	Class     string     `json:"class,omitempty"`
 	Sex       string     `json:"sex,omitempty"`
-	Grade     int        `json:"grade,omitempty"`
+	Level     int        `json:"level,omitempty"`
 	Address   string     `json:"address,omitempty"`
 	Status    string     `json:"status,omitempty"`
 	CreatedAt *time.Time `json:"created_at"`
